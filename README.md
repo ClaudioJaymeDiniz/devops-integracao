@@ -85,8 +85,8 @@ def test_editar_estacao():
 def test_criar_estacao_sem_nome():
     ...
 ```
-###
-Boas Práticas:
+
+### Boas Práticas:
 Sempre usar reason="..." para justificar o skip.
 
 Revisar testes com skip a cada sprint.
@@ -95,7 +95,7 @@ Não usar skip para esconder bugs reais.
 
 Usar skipif para ambientes específicos (ex: banco indisponível no CI).
 
-8. Checklist para Testes de Integração ✅
+### 8. Checklist para Testes de Integração ✅
  Banco de dados real/Docker configurado
 
  API respondendo corretamente (status 200/201/422/404)
@@ -116,7 +116,7 @@ Usar skipif para ambientes específicos (ex: banco indisponível no CI).
 
  Testes falhos impedem merge em main
 
-9. Exemplo de Fluxo Integração na Sprint
+### 9. Exemplo de Fluxo Integração na Sprint
 Dev finaliza a task e faz merge para develop.
 
 O pipeline de integração é executado automaticamente.
