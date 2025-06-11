@@ -25,10 +25,11 @@ Seguindo a proposta de *Entrega Contínua* de Martin Fowler:
 
 ### Justificativa com a Pirâmide de Testes
 A pirâmide de testes de Mike Cohn, reforçada por Martin Fowler, indica que a maior parte dos testes deve ser unitária, seguida de testes de integração e por fim poucos testes E2E.
-
+```
     🔺 Testes E2E (Selenium)
    🔹 Testes de Integração (pytest + DB)
   🔸 Testes Unitários (pytest, Jest)
+```
 
 Isso garante maior velocidade, manutenção e confiabilidade na base de testes.
 
@@ -83,7 +84,8 @@ def test_editar_estacao():
 @pytest.mark.xfail(reason="Bug conhecido na validação do CEP")
 def test_criar_estacao_sem_nome():
     ...
-
+```
+###
 Boas Práticas:
 Sempre usar reason="..." para justificar o skip.
 
@@ -131,3 +133,114 @@ Redução de bugs na integração frontend-backend.
 Testes replicáveis no ambiente de CI.
 
 Validação de integração com banco e outros serviços.
+
+
+Pirâmide de Testes — Estação Meteorológica
+Visão Geral
+Baseado nos 36 User Stories e critérios de aceitação do sistema, a estratégia de testes segue o modelo de Pirâmide de Testes proposta por Mike Cohn e Martin Fowler, garantindo:
+
+Alta cobertura de testes unitários.
+
+Testes de integração focados nas comunicações principais.
+
+Testes E2E cobrindo os fluxos críticos de usuário.
+
+🎯 Distribuição dos testes
+```
+                🔺 Testes End-to-End (E2E)
+            🔹 Testes de Integração
+        🔸 Testes Unitários
+```
+
+🔸 Testes Unitários (Base da pirâmide — ~70%)
+Responsáveis por garantir que cada módulo e função isolada funcione corretamente.
+
+Cobrem:
+
+Validações de entrada (ex.: US01, US15, US17, US09)
+
+Regras de negócio (ex.: US25 - condições de alerta)
+
+Conversão de dados (ex.: US20 - -50°C a 60°C)
+
+Autenticação e permissões (ex.: US36)
+
+Lógica de cálculos estatísticos (ex.: US34)
+
+Formatação de dados exportados (ex.: US23)
+
+Exemplos:
+
+User Story	Exemplo de Teste Unitário
+US01	Validação de campos obrigatórios na criação de estação
+US15	Verificação de e-mail único ao criar usuário
+US25	Validação da regra de condição de alerta
+
+🔹 Testes de Integração (Meio da pirâmide — ~20%)
+Responsáveis por validar a comunicação entre módulos e componentes.
+
+Cobrem:
+
+CRUD completo das entidades principais (US01–US18)
+
+Integração API ↔ Banco de Dados (PostgreSQL)
+
+Integração IoT (US19–US21, US27–US29)
+
+Envio de notificações (US24, US26)
+
+Upload e armazenamento de dados coletados
+
+Autenticação e permissões reais
+
+Exemplos:
+
+User Story	Exemplo de Teste de Integração
+US21	Inserção de dados processados com integridade
+US26	Envio de notificações via e-mail/SMS
+US29	Envio de dados do datalogger via rede
+
+🔺 Testes End-to-End (Topo da pirâmide — ~10%)
+Responsáveis por validar os fluxos completos como o usuário final irá utilizar.
+
+Cobrem:
+
+Login e acesso ao sistema (US36)
+
+Fluxo completo de cadastro e manutenção de estações (US01–US05)
+
+Cadastro e manutenção de usuários, parâmetros e alertas (US06–US18)
+
+Visualização do dashboard e dados históricos (US22–US23)
+
+Execução dos alertas (US24–US26)
+
+Fluxo de coleta, processamento e exibição de dados IoT (US19–US21)
+
+Exemplos de Fluxos E2E:
+
+Fluxo Completo	User Stories Relacionadas
+Cadastro de estação	US01, US02, US03, US04, US05
+Cadastro de usuários	US15, US16, US17, US18
+Visualização de dados	US22, US23, US24
+Geração de alertas	US11, US12, US13, US14, US25
+Recebimento e processamento IoT	US19, US20, US21, US27–US29
+
+Ferramentas sugeridas para E2E:
+Selenium, Cypress, Playwright
+
+🛡 Testes complementares (fora da pirâmide)
+Tipo | User Stories Relacionadas | Ferramentas Sugeridas
+Performance	US22 (Dashboard), US29 (Envio de dados)	JMeter, k6
+Segurança	US36 (Login e acesso)	OWASP ZAP
+Carga	US19–US21 (IoT alta frequência)	Locust
+Usabilidade	US33–US35 (Guias educativos)	Testes manuais
+
+✅ Benefícios da pirâmide aplicada
+Cobertura ampla com menos esforço em E2E.
+
+Detecção rápida de falhas via testes unitários.
+
+Validação real de fluxos de integração antes do deploy.
+
+Confiança na qualidade do sistema.
