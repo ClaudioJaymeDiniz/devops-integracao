@@ -21,7 +21,8 @@ Testes de integração validam a interação entre módulos do sistema, como fro
 Seguindo a proposta de *Entrega Contínua* de Martin Fowler:
 - Testes unitários são criados durante o desenvolvimento de cada feature (TDD ou logo após).
 - Testes de integração devem ser pensados **após a finalização funcional** da feature, pois dependem da existência de módulos interagindo.
-- Para cada Sprint, os testes de integração são implementados após o merge da task para a branch `develop`.
+- Para cada Sprint, os testes de integração são implementados após o merge da task para a branch `develop` e testes E2E para a branch `main`.
+- O cliente tem um tester ( Ivan ) que é responsavel por criar e gerenciar os testes.
 
 ### Justificativa com a Pirâmide de Testes
 A pirâmide de testes de Mike Cohn, reforçada por Martin Fowler, indica que a maior parte dos testes deve ser unitária, seguida de testes de integração e por fim poucos testes E2E.
@@ -41,17 +42,25 @@ Isso garante maior velocidade, manutenção e confiabilidade na base de testes.
 
 ## 5. Execução Automática com GitHub Actions
 **Workflow:**
-- Trigger: `push` ou `pull_request` para `develop`
+- Trigger: `push` ou `pull_request` para `develop` e `main`
 - Jobs:
   - `setup-backend`: Sobe banco real via Docker
   - `run-pytest-integration`: Executa testes com banco
   - `run-selenium`: Roda testes E2E no frontend via navegador headless
 
 ## 6. Estrutura Recomendada dos Testes
-/tests
-|__ integration
-|__ test_backend_api.py
-|__ test_frontend_flow.py
+/__tests__
+
+/integration
+
+test_backend_api.py
+
+test_frontend_flow.py
+
+ /e2e
+
+login.test.ts
+
 
 
 - **test_backend_api.py:** Testa chamadas reais para a API com dados inseridos no banco.
